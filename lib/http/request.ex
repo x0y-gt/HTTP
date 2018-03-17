@@ -6,8 +6,4 @@ defmodule HTTP.Request do
   def methods do
     ["OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT"]
   end
-
-  def set(req, key, value) do
-    Map.put(req, key, value)
-  end
 end

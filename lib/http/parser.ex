@@ -3,12 +3,13 @@ defmodule HTTP.Parser do
 
   # API
   def parse(msg) do
-    if is_binary(msg) do
-      request = %Request{message: msg}
-      request = request |> split_http_message |> request_line |> request_headers |> request_body
-      {:ok, request}
-    else
-      {:error, "Invalid message"}
+    cond do
+      is_binary(msg) ->
+        request = %Request{message: msg}
+        request = request |> split_http_message |> request_line |> request_headers |> request_body
+        {:ok, request}
+      true ->
+        raise "Invalid message"
     end
   end
 
