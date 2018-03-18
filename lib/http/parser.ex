@@ -31,11 +31,16 @@ defmodule HTTP.Parser do
 
   defp request_line(%Request{} = request) do
     [method, uri, version] = request.metadata.request_line |> String.split
+    uri_map = request_uri uri
     if Enum.member?(Request.methods, method) do
-      %{request | method: method, uri: uri, version: version}
+      %{request | method: method, uri: uri_map, version: version}
     else
       raise "Invalid method #{method}"
     end
+  end
+
+  defp request_uri(uri) do
+    YURI.parse uri
   end
 
   defp request_headers(%Request{} = request) do
